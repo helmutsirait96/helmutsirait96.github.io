@@ -100,7 +100,7 @@
                             'lmessage'
                             'message' ;
    }
-   .contact h2 {
+   section.contact h2 {
           font-size: 6vw;
           margin-top: 1rem;
       }
