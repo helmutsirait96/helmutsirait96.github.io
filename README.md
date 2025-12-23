@@ -5,6 +5,12 @@
 - Compatible with all mobile devices and with a beautiful and pleasant user interface.
 
 Credits:
+
 Image about -> [Gemini](https://gemini.google.com/)
+
 Font Web-> [fontsquirrel](https://www.fontsquirrel.com/fonts/poppins)
+
 Font Logo-> [fontsquirrel](https://www.fontsquirrel.com/fonts/pacifico)
+
+
+
