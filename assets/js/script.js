@@ -1,162 +1,133 @@
- // Ambil Semua Elemen DOM yang Dibutuhkan (DEKLARASI) 
-const nav = document.querySelector('nav');
-const linka = document.querySelectorAll('header nav a');
-const burger = document.querySelector('.burger');
-const burgerLine = document.querySelectorAll('.burger .burger-line');
-const containerMenu = document.querySelector('.nav-link');
- let sections = document.querySelectorAll('section');
+document.addEventListener('DOMContentLoaded', function() {
+// hamburger menu
+const hamBtn = document.querySelector('.hamburger');
+const layerBtn = document.querySelector('.nav-2 .menu');
+hamBtn.addEventListener('click', function () {
+	    hamBtn.classList.toggle('active'); 
+	    layerBtn.classList.toggle('active');
+});
 
-// burger button
-burger.addEventListener('click', function () {
-      burger.classList.toggle('burger-active');
-      containerMenu.classList.toggle('open-nav');
-       document.body.classList.toggle('hide-screen');
-})
-// smooth scrool clik the link
-for( let i = 0; i < linka.length; i++ ){
-         linka[i].addEventListener('click', function(event) {
-                // call the smoothScroll function
-               function smoothScroll(event) {
-                   event.preventDefault();
-                    // approach #2 - element-scollIntoView()
-                  // approach #3 - window.requestAnimationFrame()
-                   const targetId = event.currentTarget.getAttribute('href') === '#' ? 'header' :  event.currentTarget.getAttribute('href');
-                   const duration = 1000;
-                   const targetPosition = document.querySelector(targetId).offsetTop;
-                   const startPosition = window.pageYOffset;
-                   const distance = targetPosition - startPosition;
-                  let start = null;
-                  window.requestAnimationFrame(step);
-                  function step(timestamp) {
-                    if( !start ) start = timestamp;
-                    const progress = timestamp - start;
-                    window.scrollTo(0, isInOutQuadCubic(progress, startPosition, distance, duration));
-                    if( progress < duration) window.requestAnimationFrame(step);
-                     function isInOutQuadCubic(t, b, c, d) {
-                          t /= d / 2;
-                          if( t < 1 ) return c / 2 * t * t * t + b;
-                          t -= 2
-                          return c / 2 * (t * t * t + 2) + b; 
-                      }
-                  }
-               } 
-               smoothScroll(event);
-               if( containerMenu.classList.contains('open-nav')) {
-                  burger.click();
-               }
-         });
-    }
-// scrolled and menu active link
-document.addEventListener("DOMContentLoaded", () => {
-    // Variabel Konfigurasi
-    const headerOffset = 80; // Offset untuk Scroll Spy
-    const scrollThreshold = 50; // Ambang batas gulir untuk mengubah background
+// smooth scroll 
+const navLinks = document.querySelectorAll('.nav-link');
+const sections = document.querySelectorAll('.section');
+const navMenu = document.querySelector('.nav-menu');
+// const navMenu = document.getElementById('nav');
+const navHeight = navMenu.offsetHeight;
 
-    // Cek keberadaan elemen utama
-    if (!nav) {
-        console.error("Elemen <nav> tidak ditemukan.");
-        return;
-    }
-// 2. FUNGSI BANTUAN    
-    function removeActiveClass() {
-        linka.forEach(link => {
-            link.classList.remove('active');
+// function debounce 
+const debounce = function(func, wait) {
+      let timeout;
+      return function(...args) {
+      	  const context = this;
+      	  clearTimeout(timeout);
+      	  timeout = setTimeout(function () {
+      	  	  func.apply(context, args);
+      	  }, wait);
+      };
+};
+
+// function smooth scroll 
+const smoothScroll = function (element, duration = 800) {
+      const targetPosition = element.getBoundingClientRect().top + window.scrollY - navHeight + 40;
+      // const targetPosition = element.getBoundingClientRect().top + window.scrollY - 20;
+        const startPosition = window.scrollY;
+        const distance = targetPosition - startPosition;
+        let startTime = null;
+
+        const animation  = function (currentTime) {
+        	   if (startTime === null) startTime = currentTime;
+            const timeElapsed = currentTime - startTime;
+            const progress = Math.min(timeElapsed / duration, 1);
+
+             const easeProgress = progress < 0.5 
+                ? 2 * progress * progress 
+                : 1 - Math.pow(-2 * progress + 2, 2) / 2;
+              window.scrollTo(0, startPosition + distance * easeProgress);
+              if (timeElapsed < duration) {
+                requestAnimationFrame(animation);
+            };       
+        };
+           requestAnimationFrame(animation);
+};
+
+//  ketika menu link diclick 
+navLinks.forEach(function(link) {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = link.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                //  memanggil fungsi smooth scroll
+                smoothScroll(targetElement);
+            };
+            layerBtn.classList.remove('active');
+            hamBtn.classList.remove('active');
         });
-    }
-    function handleNavBackground() {
-        if (window.scrollY > scrollThreshold) {
-            nav.classList.add('scrolled');
-            containerMenu.classList.add('scrolled');
-            linka.forEach(link => link.classList.add('scrolled'));
-            burgerLine.forEach(line => line.classList.add('scrolled'));
-        } else {
-            nav.classList.remove('scrolled');
-            containerMenu.classList.remove('scrolled');
-            linka.forEach(link => link.classList.remove('scrolled'));
-            burgerLine.forEach(line => line.classList.remove('scrolled'));
-        }
-    }
-// 3. SCROLL SPY & NAVIGASI AKTIF 
-// Dapatkan Path saat ini. Ganti 'index.html' dengan '' jika di root
-    const currentPath = window.location.pathname.split('/').pop() || ''; 
-    let isMultiPageNav = false;
-
-// 1. Prioritaskan Pengecekan Multi-Halaman (Termasuk Home)
-linka.forEach(link => {
-        const linkHref = link.getAttribute('href');
-        // Lewati tautan internal (anchor) untuk logika multi-halaman
-        if (linkHref.startsWith('#')) return; 
-        // Dapatkan nama file atau string kosong jika linkHref adalah '/'
-        const linkPath = linkHref.split('/').pop() || '';
-        // **PERBAIKAN HOME:**
-        // Cek jika link ini adalah tautan Home (index.html atau kosong)
-        const isHomeLink = linkPath === '' || linkPath.toLowerCase() === 'index.html';
-        // Cek jika halaman saat ini adalah Home (root atau index.html)
-        const isCurrentHome = currentPath === '' || currentPath.toLowerCase() === 'index.html';
-        // Jika tautan adalah Home DAN halaman saat ini adalah Home, ATAU
-        // Jika tautan dan halaman cocok (untuk non-Home)
-        if ((isHomeLink && isCurrentHome) || (linkPath === currentPath)) {
-            removeActiveClass();
-            link.classList.add('active');
-            isMultiPageNav = true;
-        }
     });
 
-    // --- Fungsi yang menjalankan logika Scroll Spy ---
-    function checkScrollActive() {
-        let currentSectionId = '';
-        
-        // Tentukan bagian mana yang sedang dilihat
-        sections.forEach(section => {
+// active link
+const setActiveLink = function() {
+    const scrollOffset = window.scrollY + navHeight + 2; 
+    // const scrollOffset = window.scrollY + 50 + 100; 
+    let currentActiveSection = '';
+
+    sections.forEach(function(section) {
             const sectionTop = section.offsetTop;
-            if (window.scrollY >= sectionTop - headerOffset) {
-                currentSectionId = section.getAttribute('id');
+            const sectionHeight = section.offsetHeight;
+
+            if (scrollOffset >= sectionTop && scrollOffset < sectionTop + sectionHeight) {
+                currentActiveSection = section.getAttribute('id');
             }
         });
+    navLinks.forEach(function(link) {
+            link.classList.remove('active');
+            if (link.getAttribute('href').substring(1) === currentActiveSection) {
+                link.classList.add('active');
+            }
+        });
+};
 
-        // Terapkan kelas 'active' jika ID bagian ditemukan
-        if (currentSectionId) {
-            removeActiveClass();
-            linka.forEach(link => {
-                const linkTarget = link.getAttribute('href').substring(1); 
-                
-                // Ini akan mengaktifkan #home saat gulir
-                if (linkTarget === currentSectionId) {
-                    link.classList.add('active');
+ // Implementasi Debounce  
+    // const debouncedSetActiveLink = debounce(setActiveLink, 50);
+    const debouncedSetActiveLink = debounce(setActiveLink, 0);
+    window.addEventListener('scroll', debouncedSetActiveLink);
+    window.addEventListener('load', setActiveLink); 
+
+// change color navigation, to scroll
+//     window.addEventListener("scroll", function () {
+//   if (window.scrollY > 20) {
+//     navMenu.classList.add("active");
+//   } else {
+//     navMenu.classList.remove("active");
+//   }
+// });
+
+function meteor() {
+                let amount = 50;
+                let body = document.querySelector(".hero-section");
+                let count = 0;
+
+                while (count < amount) {
+                    let drop = document.createElement("i");
+
+                    let size = Math.random() * 2;
+                    let posX = Math.floor(Math.random() * window.innerWidth);
+                    let delay = Math.random() * -10;
+                    let duration = Math.random() * 5;
+
+                    drop.style.width = `${0.1 + size}px`;
+                    drop.style.left = `${posX}px`;
+                    drop.style.animationDelay = `${delay}s`;
+                    drop.style.animationDuration = `${1 + duration}s`;
+
+                    body.appendChild(drop);
+                    count++;
                 }
-            });
-        }
-        
-        // **PERBAIKAN HOME SCROLL**
-        // Jika di bagian paling atas (atau di atas ambang batas scroll)
-        if (window.scrollY < scrollThreshold) {
-             removeActiveClass();
-             // Cari tautan yang href-nya #home (atau '/')
-             const homeLinkRef = Array.from(linka).find(link => 
-                 link.getAttribute('href').toLowerCase() === '#home' || 
-                 link.getAttribute('href') === '/' || 
-                 link.getAttribute('href').toLowerCase() === 'index.html'
-             );
-             
-             if (homeLinkRef) {
-                 homeLinkRef.classList.add('active');
-             }
-         }
-    }
-    // 4. Inisialisasi Event Listener
-    window.addEventListener('scroll', () => {
-        handleNavBackground(); // Latar belakang navigasi
+            }
 
-        // Scroll Spy hanya berjalan jika ini bukan navigasi multi-halaman yang sudah diatur
-        // (Scroll spy akan mengambil alih jika pengguna berada di index.html dan menggulir)
-        if (!isMultiPageNav) { 
-            checkScrollActive(); 
-        }
-    });
-    // Panggil fungsi sekali saat load untuk mengatur status awal
-    handleNavBackground(); // Atur background awal
-    // Atur status aktif awal jika ini halaman SPA/Home
-    if (!isMultiPageNav) {
-        checkScrollActive(); 
-    }
+            meteor();
+
+
+
+
 });
