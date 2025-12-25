@@ -93,40 +93,6 @@ const setActiveLink = function() {
     window.addEventListener('scroll', debouncedSetActiveLink);
     window.addEventListener('load', setActiveLink); 
 
-// change color navigation, to scroll
-//     window.addEventListener("scroll", function () {
-//   if (window.scrollY > 20) {
-//     navMenu.classList.add("active");
-//   } else {
-//     navMenu.classList.remove("active");
-//   }
-// });
-
-function meteor() {
-                let amount = 50;
-                let body = document.querySelector(".hero-section");
-                let count = 0;
-
-                while (count < amount) {
-                    let drop = document.createElement("i");
-
-                    let size = Math.random() * 2;
-                    let posX = Math.floor(Math.random() * window.innerWidth);
-                    let delay = Math.random() * -10;
-                    let duration = Math.random() * 5;
-
-                    drop.style.width = `${0.1 + size}px`;
-                    drop.style.left = `${posX}px`;
-                    drop.style.animationDelay = `${delay}s`;
-                    drop.style.animationDuration = `${1 + duration}s`;
-
-                    body.appendChild(drop);
-                    count++;
-                }
-            }
-
-            meteor();
-
 
 
 
