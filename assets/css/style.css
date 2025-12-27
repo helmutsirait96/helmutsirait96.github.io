@@ -377,7 +377,6 @@ form .form-element:nth-child(3) {
     border-color: var(--color-font);
     outline: 0;
     box-shadow: 0 0 0 0.1rem var(--color-font);
-    color: green;
 }
 
 form button.btn {
