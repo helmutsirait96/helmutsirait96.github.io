@@ -20,7 +20,8 @@
    <!-- responsive -->
    <link rel="stylesheet" href="./assets/css/responsive.css">
     <!-- JavaScript library recaptcha -->
-  <script src="https://www.google.com/recaptcha/enterprise.js" async defer></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <!-- <script src="https://www.google.com/recaptcha/enterprise.js" async defer></script> -->
    <!-- script -->
    	<script src="./assets/js/script.js"></script>
 </head>
@@ -165,7 +166,7 @@
       <section class="contact section" id="contact">
       	    <h2>Contact</h2>
 	 	    <p>Have You Any Project? Please Drop a Message</p>
-	 	  	 <form  id="my-form" action="https://formspree.io/f/{form_id}" id="my-form">
+	 	  	 <form  id="my-form" action="https://formspree.io/f/{form_id}" method="post">
 	 	  	 	    <div class="form-element">
 	 	  	 	    	   <label for="name">Name</label>
 	 	  	 	    	  <input type="text" id="name" required placeholder="your name"autocomplete="off" pattern="[a-zA-Z0-9]+" minlength="4" maxlength="10" name="name">
