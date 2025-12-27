@@ -119,6 +119,24 @@ button.btn {
 }
 }
 
+/* Mobile small */
+ @media( width <= 350px ) {
+     button.btn {
+      width: 20%;
+   }
+
+     .container-btn .btn {
+     width: 60%;
+  } 
+
+  button.contact-btn {
+      width: 40%;
+  }
+
+ }
+
+
+
 /* Tablet screen ( Potrait and Landscape ) */
 @media (767px <= width <=1023px) { 
     .container-btn .btn {
