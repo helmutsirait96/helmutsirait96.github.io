@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+// document.addEventListener('DOMContentLoaded', function() {
 // hamburger menu
 const hamBtn = document.querySelector('.hamburger');
 const layerBtn = document.querySelector('.nav-2 .menu');
@@ -97,7 +97,6 @@ const setActiveLink = function() {
 
 // recaptcha
  var form = document.getElementById("my-form");
-  
   async function handleSubmit(event) {
     event.preventDefault();
     var status = document.getElementById("my-form-status");
@@ -130,4 +129,4 @@ const setActiveLink = function() {
 
 
 
-});
+// });
