@@ -110,13 +110,14 @@ const setActiveLink = function() {
     }).then(response => {
       if (response.ok) {
         status.innerHTML = '<p style="font-size: 14px; color: green;">your message has been sent</p>';
-        setTimeout(() => {
-           status.innerHTML = '';
-       }, 1000);
+      
          if (typeof grecaptcha !== "undefined") {
           grecaptcha.reset();
       }
         form.reset()
+       setTimeout(() => {
+           status.innerHTML = '';
+       }, 8000);
       } else {
         response.json().then(data => {
           if (Object.hasOwn(data, 'errors')) {

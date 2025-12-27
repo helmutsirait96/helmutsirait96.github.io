@@ -330,10 +330,14 @@ form {
      grid-template-columns: 1fr 1fr;
      grid-template-areas: 'name email' 
                            'message message'
-                           'cap cap'
+                           'cap status'
                            'btn btn';
       gap: 1rem;     
       width: 50%;               
+}
+
+.status {
+   grid-area: status;
 }
 .g-recaptcha {
      grid-area: cap;
@@ -382,6 +386,8 @@ form .form-element:nth-child(3) {
 form button.btn {
  width: 30%;
 }
+
+
 
 /* footer */
 footer {
