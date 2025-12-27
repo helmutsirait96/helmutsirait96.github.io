@@ -109,19 +109,19 @@ const setActiveLink = function() {
       }
     }).then(response => {
       if (response.ok) {
-        status.innerHTML = "Thanks for your submission!";
+        status.innerHTML = '<p style="font-size: 14px; color: green;">your message has been sent</p>';
         form.reset()
       } else {
         response.json().then(data => {
           if (Object.hasOwn(data, 'errors')) {
             status.innerHTML = data["errors"].map(error => error["message"]).join(", ")
           } else {
-            status.innerHTML = "Oops! There was a problem submitting your form"
+            status.innerHTML = '<p style="font-size: 14px; color: red;">To continue, please check the box reCAPTCHA</p>'
           }
         })
       }
     }).catch(error => {
-      status.innerHTML = "Oops! There was a problem submitting your form"
+      status.innerHTML = "<p>Oops! There was a problem submitting your form</p>"
     });
   }
   form.addEventListener("submit", handleSubmit)   

@@ -87,7 +87,9 @@ form {
      grid-template-areas: 'name'
                           'email'
                           'message'
-                          'message';
+                          'message'
+                          'cap'
+                          'btn';
                           padding: 0 2rem;
     box-sizing: border-box;                      
     width: 100%;                      

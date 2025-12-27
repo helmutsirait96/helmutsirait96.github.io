@@ -329,9 +329,17 @@ form {
      display: grid;
      grid-template-columns: 1fr 1fr;
      grid-template-areas: 'name email' 
-                           'message message';
+                           'message message'
+                           'cap cap'
+                           'btn btn';
       gap: 1rem;     
       width: 50%;               
+}
+.g-recaptcha {
+     grid-area: cap;
+}
+form button {
+     grid-area: btn;
 }
 form .form-element:nth-child(1) {
        grid-area: name;
@@ -369,13 +377,13 @@ form .form-element:nth-child(3) {
     border-color: var(--color-font);
     outline: 0;
     box-shadow: 0 0 0 0.1rem var(--color-font);
+    color: green;
 }
 
 form button.btn {
-    margin-top: 5px;
+ width: 30%;
 }
 
-   
 /* footer */
 footer {
     background-color: var(--color-font);
