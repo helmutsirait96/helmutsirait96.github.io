@@ -26,6 +26,7 @@ main {
         width: 100%;
         z-index: -1;
          transition: all .5s;
+          background: radial-gradient(circle at top right, #e61a5e, #5e1ae6);
 	  }
 	  svg.hamburger {
         display: block;
@@ -64,10 +65,13 @@ main {
 	  flex-direction: column;
      align-self: flex-start;
 }
-.container-btn .btn {
-     width: 50%;
+.container-btn button.btn {
+     width: 40%;
 }
 /* portfolio */
+.portfolio h2 {
+    margin-top: 20px;
+}
 .portfolio > p {
 	width: 100%;
    box-sizing: border-box;
@@ -116,8 +120,8 @@ footer {
     flex-wrap: wrap;
 }
 
-button.btn {
-      width: 30%;
+form button.btn {
+      width: 25%;
       display: block;
 }
 }
@@ -128,8 +132,8 @@ button.btn {
       width: 20%;
    }
 
-     .container-btn .btn {
-     width: 60%;
+    .container-btn button.btn {
+     width: 50%;
   } 
 
   button.contact-btn {
@@ -142,13 +146,12 @@ button.btn {
 
 /* Tablet screen ( Potrait and Landscape ) */
 @media (767px <= width <=1023px) { 
-    .container-btn .btn {
-     width: 40%;
+    .container-btn button.btn {
+     width: 35%;
   } 
 
- button.btn {
-      width: 40%;
-      margin: 0;
+ form button.btn {
+      width: 30%;
  }
 
 }
