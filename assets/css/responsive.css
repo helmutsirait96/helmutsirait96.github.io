@@ -127,7 +127,7 @@ form button.btn {
 }
 
 /* Mobile small */
- @media( width <= 350px ) {
+ @media( width <= 400px ) {
      button.btn {
       width: 20%;
    }
