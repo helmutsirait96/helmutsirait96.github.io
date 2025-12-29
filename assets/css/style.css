@@ -354,7 +354,8 @@ form {
                            'cap status'
                            'btn btn';
       gap: 1rem;     
-      width: 50%;               
+      width: 50%;      
+      box-sizing: border-box;         
 }
 
 .status {
@@ -362,6 +363,7 @@ form {
 }
 .g-recaptcha {
      grid-area: cap;
+     border: 1px solid black;
 }
 form button {
      grid-area: btn;
