@@ -180,6 +180,9 @@ form button.btn {
     .portfolio section {
       
     }
+    .portfolio p {
+        margin-bottom: 30px;
+    }
     .content-portfolio .card {
      padding: 1rem;
      height: 400px;
@@ -189,6 +192,7 @@ form button.btn {
      gap: 1rem;
     }
     .card .badges{
+        margin-top: -40px;
         display: unset;
     }
     .content-portfolio {
