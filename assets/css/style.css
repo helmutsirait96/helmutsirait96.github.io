@@ -23,8 +23,7 @@ nav {
 	 left: 0;
 	 top: 0;
 	 right: 0;
-/*	 background-color: var(--color-font);*/
- background: radial-gradient(circle at top right, #e61a5e, #5e1ae6);
+	 background-color: var(--color-font);
 	 z-index: 999;
 }
 
@@ -119,10 +118,6 @@ nav .logo {
      flex-direction: column;
      justify-content: center;
      align-items: center;
-/*     background-color: var(--color-font);*/
-/*     background-repeat: no-repeat;*/
-/*     background-size: cover;*/
-/*     background-position: center;*/
       background-attachment: fixed;
      color: var(--color-bc);
      background-attachment: fixed;
@@ -130,10 +125,7 @@ nav .logo {
      text-align: center;
      position: relative;
      overflow: hidden;
-   
-/*     transform: rotate(15deg);*/
-/*     background: linear-gradient(15deg, #191d2b);*/
- background: radial-gradient(circle at top right, #e61a5e, #5e1ae6);
+     background: linear-gradient(15deg, #191d2b);
 } 
 .hero-section img {
    width: 20%;
@@ -198,6 +190,12 @@ i {
 .about p, .skills, .container-btn {
    width: 50%;
 }
+.about p {
+       text-align: justify-all;
+       hyphens: auto;
+       word-break: break-all;
+         overflow-wrap: break-word;
+}
 .skills h3 {
 	 font-weight: 600;
 	 font-size: 1.258rem;
@@ -212,8 +210,7 @@ i {
 }
 /* portfolio */
 .portfolio {
-/*	   background-color: var(--color-font);*/
- background: radial-gradient(circle at top right, #e61a5e, #5e1ae6);
+	   background-color: var(--color-font);
 	 	color: var(--color-bc);
 	 	height: 100%;
       padding-top: 3rem;
@@ -256,6 +253,10 @@ i {
   -webkit-box-orient: vertical;
   font-weight: 300;
 /*  font-size: 15px;*/
+       text-align: justify;
+/*       hyphens: auto;*/
+       word-break: break-all;
+       overflow-wrap: break-word;
 }
 .badges {
      margin-top: 10px;
@@ -270,7 +271,7 @@ i {
 }
 
 /* button */
-.btn{
+.btn {
   margin-top: 20px;
   display: inline-block;
   position: relative;
@@ -279,8 +280,7 @@ i {
   color: var(--color-bc-2);
   font-size: 18px;
   cursor: pointer;
-/*  background: var(--color-font);*/
- background: radial-gradient(circle at top right, #e61a5e, #5e1ae6);
+  background: var(--color-font);
 }
 .btn span {
   display: block;
@@ -415,7 +415,7 @@ form button.btn {
 
 /* footer */
 footer {
-     background: radial-gradient(circle at top right, #e61a5e, #5e1ae6);
+    background-color: var(--color-font);
     color: var(--color-bc);
    display: flex;
     justify-content: space-around;
