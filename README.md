@@ -4,7 +4,7 @@
 
 ## 🚀 Live Demo
 See my portfolio website here: [Helmut Sirait](https://helmutsirait96.com)
-![Portfolio Screenshot](../assets/img/sc.PNG)
+![Portfolio Screenshot](https://github.com/helmutsirait96/images/blob/master/sc.PNG?raw=true)
 
 
 ## 📄 About Project
