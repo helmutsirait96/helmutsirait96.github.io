@@ -3,7 +3,7 @@
 
 
 ## 🚀 Live Demo
-See my portfolio website here: [Helmut Sirait](https://helmutsirait96.com)
+See my portfolio website here: [Helmut Sirait](https://helmutsirait96.github.io)
 ![Portfolio Screenshot](https://github.com/helmutsirait96/images/blob/master/sc.PNG?raw=true)
 
 
