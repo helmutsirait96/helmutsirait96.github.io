@@ -1,139 +1,224 @@
-// document.addEventListener('DOMContentLoaded', function() {
-// hamburger menu
-const hamBtn = document.querySelector('.hamburger');
-const layerBtn = document.querySelector('.nav-2 .menu');
-hamBtn.addEventListener('click', function () {
-	    hamBtn.classList.toggle('active'); 
-	    layerBtn.classList.toggle('active');
+// Remove menu mobile 
+const navLink = document.querySelectorAll('.nav-link');
+const navLogo = document.querySelector('.nav-logo');
+
+const linkAction = () => {
+    const navMenu = document.getElementById('nav-menu');
+    navMenu.classList.remove('show-menu');
+}
+
+navLink.forEach((n) => n.addEventListener('click', linkAction));
+navLogo.addEventListener('click', function () {
+       const navMenu = document.getElementById('nav-menu');
+       navMenu.classList.remove('show-menu');
+})
+
+// Menu Show & HIdden 
+const navMenu = document.getElementById('nav-menu'),
+navToggle = document.getElementById('nav-toggle'),
+navClose = document.getElementById('nav-close');
+
+// Menu Show
+// Validate if contant exists
+if(navToggle) {
+    navToggle.addEventListener('click', () => {
+         navMenu.classList.add('show-menu');
+    });  
+}
+
+// Menu Hidden
+// Validate if contant exists
+if(navClose) {
+    navClose.addEventListener('click', () => {
+         navMenu.classList.remove('show-menu');
+    });
+}
+
+
+// Change Background Color 
+const scrollHeader = () => {
+    const header = document.getElementById('header');
+
+    this.scrollY >= 20 
+    ? header.classList.add('scroll-header') 
+    : header.classList.remove('scroll-header');
+};
+window.addEventListener('scroll', scrollHeader);
+
+// scroll sections active link 
+const sections = document.querySelectorAll('section[id]')
+
+const scrollActive = () => {
+    const scrollY = window.pageYOffset; 
+    sections.forEach((current) => {
+        const sectionHeight = current.offsetHeight,
+        sectionTop = current.offsetTop - 58,
+        sectionId = current.getAttribute('id'),
+        sectionClass = document.querySelector('.header a[href*=' + sectionId + ']'
+         );
+        if( scrollY > sectionTop && scrollY <= sectionTop + sectionHeight ) {
+            sectionClass.classList.add('active-link');
+        } else {
+            sectionClass.classList.remove('active-link');
+
+        }
+    });
+}
+window.addEventListener('scroll', scrollActive);
+
+// scroll about animation 
+ gsap.registerPlugin(ScrollTrigger);
+gsap.utils.toArray(".text-gradient").forEach((span) => {
+ 	 gsap.to(span, {
+        backgroundSize: '100% 100%',
+        ease: 'none',
+        scrollTrigger: {
+        	   trigger: span, 
+        	   start: 'top 70%',
+        	   end: 'top 100%',
+        	   scrub: true,			
+        }
+ 	 });
+ });
+
+// Dark Light Theme 
+window.addEventListener('DOMContentLoaded', () => {
+   const toggleBtn = document.getElementById('theme-toggle');
+   // const iconfreecodecamp = document.querySelector('img .resume-icon');
+const imgElemen = document.querySelector('img.resume-icon ');
+   function applyTheme (theme) {
+      if( theme === 'light' ) {
+           document.body.classList.add('light-theme');
+           toggleBtn.classList.remove('ri-sun-line');
+           toggleBtn.classList.add('ri-moon-line');
+           imgElemen.src = './assets/icon/freecodecamp-black.svg';
+      } else {
+           document.body.classList.remove('light-theme');
+           toggleBtn.classList.add('ri-sun-line');
+           toggleBtn.classList.remove('ri-moon-line');
+           imgElemen.src = './assets/icon/freecodecamp-light.svg';
+      }    
+       // local storage
+      localStorage.setItem('theme', theme)
+  }
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        applyTheme(savedTheme);
+
+       toggleBtn.addEventListener('click', () => {
+               isLight = document.body.classList.contains('light-theme');
+               applyTheme(isLight ? 'dark' : 'light');
+       });   
+   
+}); 
+
+
+// Mixitup filter portfolio
+let mixer = mixitup('.work-container', {
+     selectors: {
+          target: '.mix',
+     },
+     animation: {
+         duration: 300,
+     }
 });
 
-// smooth scroll 
-const navLinks = document.querySelectorAll('.nav-link');
-const sections = document.querySelectorAll('.section');
-const navMenu = document.querySelector('.nav-menu');
-// const navMenu = document.getElementById('nav');
-const navHeight = navMenu.offsetHeight;
+// active work 
+const linkWork = document.querySelectorAll(".work-item");
+function activeWork () {
+      linkWork.forEach((a) => {
+         a.classList.remove('active-work');
+      });        
+        this.classList.add('active-work');    
+}
 
-// function debounce 
-const debounce = function(func, wait) {
-      let timeout;
-      return function(...args) {
-      	  const context = this;
-      	  clearTimeout(timeout);
-      	  timeout = setTimeout(function () {
-      	  	  func.apply(context, args);
-      	  }, wait);
-      };
-};
+linkWork.forEach((a) => a.addEventListener('click', activeWork));       
 
-// function smooth scroll 
-const smoothScroll = function (element, duration = 800) {
-      const targetPosition = element.getBoundingClientRect().top + window.scrollY - navHeight + 40;
-      // const targetPosition = element.getBoundingClientRect().top + window.scrollY - 20;
-        const startPosition = window.scrollY;
-        const distance = targetPosition - startPosition;
-        let startTime = null;
+// Email JS 
+const contactForm = document.getElementById('contact-form'),
+contactName = document.getElementById('contact-name'),
+contactEmail = document.getElementById('contact-email'),
+contactMessage = document.getElementById('contact-message'),
+message = document.getElementById('message');
 
-        const animation  = function (currentTime) {
-        	   if (startTime === null) startTime = currentTime;
-            const timeElapsed = currentTime - startTime;
-            const progress = Math.min(timeElapsed / duration, 1);
+const sendEmail = (e) => {
+    e.preventDefault();
 
-             const easeProgress = progress < 0.5 
-                ? 2 * progress * progress 
-                : 1 - Math.pow(-2 * progress + 2, 2) / 2;
-              window.scrollTo(0, startPosition + distance * easeProgress);
-              if (timeElapsed < duration) {
-                requestAnimationFrame(animation);
-            };       
-        };
-           requestAnimationFrame(animation);
-};
+    if( contactName.value === '' || 
+       contactEmail.value === '' || 
+       contactMessage.value === '' ) {
+        message.textContent = 'Write all the input fields';
 
-//  ketika menu link diclick 
-navLinks.forEach(function(link) {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            const targetId = link.getAttribute('href');
-            const targetElement = document.querySelector(targetId);
-            if (targetElement) {
-                //  memanggil fungsi smooth scroll
-                smoothScroll(targetElement);
-            };
-            layerBtn.classList.remove('active');
-            hamBtn.classList.remove('active');
-        });
-    });
-
-// active link
-const setActiveLink = function() {
-    const scrollOffset = window.scrollY + navHeight + 2; 
-    // const scrollOffset = window.scrollY + 50 + 100; 
-    let currentActiveSection = '';
-
-    sections.forEach(function(section) {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.offsetHeight;
-
-            if (scrollOffset >= sectionTop && scrollOffset < sectionTop + sectionHeight) {
-                currentActiveSection = section.getAttribute('id');
-            }
-        });
-    navLinks.forEach(function(link) {
-            link.classList.remove('active');
-            if (link.getAttribute('href').substring(1) === currentActiveSection) {
-                link.classList.add('active');
-            }
-        });
-};
-
- // Implementasi Debounce  
-    // const debouncedSetActiveLink = debounce(setActiveLink, 50);
-    const debouncedSetActiveLink = debounce(setActiveLink, 0);
-    window.addEventListener('scroll', debouncedSetActiveLink);
-    window.addEventListener('load', setActiveLink); 
-
-
-
-// recaptcha
- var form = document.getElementById("my-form");
-  async function handleSubmit(event) {
-    event.preventDefault();
-    var status = document.getElementById("my-form-status");
-    var data = new FormData(event.target);
-    fetch(event.target.action, {
-      method: form.method,
-      body: data,
-      headers: {
-          'Accept': 'application/json'
-      }
-    }).then(response => {
-      if (response.ok) {
-        status.innerHTML = '<p style="font-size: 14px; color: green;">your message has been sent</p>';
-      
-         if (typeof grecaptcha !== "undefined") {
-          grecaptcha.reset();
-      }
-        form.reset()
+        setTimeout(() => {
+            message.textContent = '';
+        }, 3000);
+    } else  {
+       emailjs.sendForm('service_a7pz4t8', 'template_gkt7byc', '#contact-form', '6bdvKfymngas2cJEl' ).then(
+  () => {
+      message.textContent = 'Message sent ✔';
        setTimeout(() => {
-           status.innerHTML = '';
-       }, 8000);
-      } else {
-        response.json().then(data => {
-          if (Object.hasOwn(data, 'errors')) {
-            status.innerHTML = data["errors"].map(error => error["message"]).join(", ")
-          } else {
-            status.innerHTML = '<p style="font-size: 14px; color: red;">To continue, please check the box reCAPTCHA</p>'
-          }
-        })
-      }
-    }).catch(error => {
-      status.innerHTML = "<p>Oops! There was a problem submitting your form</p>"
-    });
-  }
-  form.addEventListener("submit", handleSubmit)   
+            message.textContent = '';
+        }, 5000);
+  },
+  (error) => {
+      alert('OOPs! SOMETHING WENT WRONG...', error);
+  },
+);
+   contactName.value = '';
+   contactEmail.value = '';
+   contactMessage.value = '';
+
+    }
+};
+contactForm.addEventListener('submit', sendEmail);
+
+// scroll reveal animation 
+const sr = ScrollReveal({
+    origin: 'top',
+    distance: '60px',
+    duration: 2500,
+    delay: 400,
+});
+
+sr.reveal(`.home-data`);
+sr.reveal(`.home-img-wrapper`, { delay: 500 });
+sr.reveal(`.home-social`, { delay: 600 });
+sr.reveal(`.services-card, .mix`, { interval: 600 });
+// sr.reveal(`.skills-developer, .resume-left, .contact-group`, { origin: 'left'});
+// sr.reveal(`.skills-designer, .resume-right, .contact-form`, { origin: 'right'});
+sr.reveal(`.skills-developer, .resume-left`, { origin: 'left'});
+sr.reveal(`.skills-designer, .resume-right`, { origin: 'right'});
 
 
 
+// smooth scrool clik the link
+for( let i = 0; i < navLink.length; i++ ){
+         navLink[i].addEventListener('click', function(event) {
+                // call the smoothScroll function
+               function smoothScroll(event) {
+                   event.preventDefault();
+                    // approach #2 - element-scollIntoView()
+                  // approach #3 - window.requestAnimationFrame()
+                   const targetId = event.currentTarget.getAttribute('href') === '#' ? 'header' :  event.currentTarget.getAttribute('href');
+                   const duration = 1000;
+                   const targetPosition = document.querySelector(targetId).offsetTop;
+                   const startPosition = window.pageYOffset;
+                   const distance = targetPosition - startPosition;
+                  let start = null;
+                  window.requestAnimationFrame(step);
+                  function step(timestamp) {
+                    if( !start ) start = timestamp;
+                    const progress = timestamp - start;
+                    window.scrollTo(0, isInOutQuadCubic(progress, startPosition, distance, duration));
+                    if( progress < duration) window.requestAnimationFrame(step);
+                     function isInOutQuadCubic(t, b, c, d) {
+                          t /= d / 2;
+                          if( t < 1 ) return c / 2 * t * t * t + b;
+                          t -= 2
+                          return c / 2 * (t * t * t + 2) + b; 
+                      }
+                  }
+               } 
+               smoothScroll(event);
+         });
+    }
 
-// });
