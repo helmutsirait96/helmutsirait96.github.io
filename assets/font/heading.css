@@ -4,3 +4,10 @@
     font-weight: normal;
     font-style: normal;
 }
+
+@font-face {
+    font-family: 'AlexBrush';
+    src: url('AlexBrush-Regular.ttf') format('TrueType');
+    font-weight: normal;
+    font-style: normal;
+}
